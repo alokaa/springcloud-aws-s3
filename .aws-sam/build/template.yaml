@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'springcloud-aws-s3
+
+  Sample SAM Template for springcloud-aws-s3
+
+  '
+Globals:
+  Function:
+    Timeout: 20
+Resources:
+  SpringCloudS3Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: SpringCloudS3Function
+      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
+      Runtime: java11
+      Architectures:
+      - x86_64
+      MemorySize: 512
+      Policies:
+      - AmazonS3FullAccess
+      - AWSLambdaBasicExecutionRole
+      Environment:
+        Variables:
+          spring_cloud_function_scan_packages: com.alokaparanji.aws.s3.handler
+          spring_cloud_stream_function_routing_enabled: true
+      Events:
+        s3Notification:
+          Type: S3
+          Properties:
+            Bucket:
+              Ref: SpringCloudS3Bucket
+            Events: s3:ObjectCreated:*
+  SpringCloudS3Bucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties:
+      BucketName:
+        Fn::Sub: spring-cloud-s3-bucket-${AWS::StackName}-${AWS::AccountId}
