@@ -25,8 +25,9 @@ Resources:
         - AWSLambdaBasicExecutionRole
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
-          spring_cloud_function_scan_packages: com.alokaparanji.aws.s3.handler
+          spring_cloud_function_scan_packages: com.alokaparanji.aws.s3
           spring_cloud_stream_function_routing_enabled: true
+          spring_cloud_function_definition: s3EventHandler
       Events:
         s3Notification:
           Type: S3

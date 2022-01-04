@@ -1,12 +1,10 @@
 package com.alokaparanji.aws.s3.service;
 
 import java.util.Arrays;
-
-import org.springframework.stereotype.Service;
-
+import org.springframework.stereotype.Component;
 import com.alokaparanji.aws.s3.model.Person;
 
-@Service
+@Component
 public class PersonService {
 
 	public void printService(Person[] persons) {
